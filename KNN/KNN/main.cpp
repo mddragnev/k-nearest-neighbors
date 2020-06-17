@@ -109,7 +109,6 @@ double euclideanDistance(Company& lhs, Company& test) {
 	return sqrt(pow((lhs.turnover - test.turnover), 2) + pow((lhs.characteristics - test.characteristics), 2));
 }
 
-// We do not need to use absolute value of characteristics because they are unsigned
 double manhattanDistance(Company& lhs, Company& test) {
 	return (abs(lhs.turnover - test.turnover) + abs(lhs.characteristics - test.characteristics));
 }
