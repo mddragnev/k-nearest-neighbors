@@ -136,6 +136,7 @@ bool KNN(vector<Company>& data, Company& test, int k) {
 			++countUnsuccesful;
 		}
 	}
+	// Based on the count of succesful and unsuccessful examples within those k, we are deciding whether the test example is successful or not.
 	if (countSuccesful == countUnsuccesful) {
 		test.success = data[0].success;
 	}
