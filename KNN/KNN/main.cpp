@@ -84,7 +84,7 @@ private:
 			size_t start = 0;
 			do {
 				size_t x = target.find(delim, start);
-				// a check whether target is found
+				// a check whether the target is found
 				if (x == -1)
 				{
 					break;
@@ -119,9 +119,9 @@ void fillDistances(vector<Company>& data, Company& test, double(*distanceFunctio
 	}
 }
 
-bool KNN(vector<Company>& data, Company& test, int k) {
+bool KNN(vector<Company>& data, Company& test, int k, double(*distanceFunction)(Company&, Company&)) {
 	//filling the distances between all points and test
-	fillDistances(data, test, manhattanDistance);
+	fillDistances(data, test, distanceFunction);
 
 	//sorting so that we can get the k nearest
 	sort(data.begin(), data.end(), comparison);
@@ -147,6 +147,7 @@ bool KNN(vector<Company>& data, Company& test, int k) {
 }
 
 int main() {
+	
 	const string path = "C:\\Users\\MDragnev\\Desktop\\DATA.csv";
 	CSVReader reader(path);
 	vector<vector<string>> rawData = reader.getData();
@@ -155,9 +156,17 @@ int main() {
 		Company comp(stoi(line[0]), line[1], line[2] == "1" ? true : false);
 		data.push_back(comp);
 	}
-	Company test(1213, "Very Strong", false);
 
-	string answer = KNN(data, test, 10) ? "Successful" : "Unsuccessful";
+	/* Test examples
+	* 1256 Weak - should return Successful
+	* 725 Weak - should return Unsuccessful
+	* 1471 Average - should return Successful
+	* 703 Very Strong - should return Unsuccessful
+	* 1301 Strong - should return Successful
+	*/
+	Company test(703, "Very Strong", true);
+
+	string answer = KNN(data, test, 12, euclideanDistance) ? "Successful" : "Unsuccessful";
 	cout << answer;
 
 }
